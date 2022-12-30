@@ -3,114 +3,58 @@ from collections import Counter
 
 
 class GameLogic:
-  #build GameLogic class
-    @staticmethod
-   #build roll dice function that rolls dice and stores them in tuple
 
-    def roll_dice(num_dice):
-        values = []
-        for i in range(num_dice):
-            value = randint(1, 6)
-            values.append(value)
-        return tuple(values)
+    @staticmethod
+    def validate_keepers(dice_roll, dice_kept):
+        dice_roll_validation = Counter(dice_roll)
+        dice_kept_validation = Counter(dice_kept)
+
+        if len(dice_kept_validation) <= len(dice_roll_validation):
+            if all(dice_kept_validation[key] <= dice_roll_validation[key] for key in dice_kept_validation.keys()):
+                return True
+            return False
+        else:
+            return False
+
+    @staticmethod
+    def roll_dice(number):
+        return tuple(randint(1, 6) for x in range(0, number))
 
     @staticmethod
     # Calculates Scores and references them to test value to determine output
-    def calculate_score(values):
+    def calculate_score(dice_roll):
+        dice_count = Counter(dice_roll)
+
+        score_dict = {1: 1000, 2: 200, 3: 300, 4: 400, 5: 500, 6: 600}
+
         score = 0
-        counts = Counter(values)
-        pair_counter = 0
 
-        for die in counts:
-            if counts[die] == 2:
-                pair_counter += 1
-            if pair_counter < 3 and len(counts) < 6:
-                if die == 1:
-                    if counts[die] == 1:
-                        score += 100
-                    elif counts[die] == 2:
-                        score += 200
-                    elif counts[die] == 3:
-                        score += 1000
-                    elif counts[die] == 4:
-                        score += 2000
-                    elif counts[die] == 5:
-                        score += 3000
-                    elif counts[die] == 6:
-                        score += 4000
-                if die == 2:
-                    if counts[die] == 1:
-                        score += 0
-                    elif counts[die] == 2:
-                        score += 0
-                    elif counts[die] == 3:
-                        score += 200
-                    elif counts[die] == 4:
-                        score += 400
-                    elif counts[die] == 5:
-                        score += 600
-                    elif counts[die] == 6:
-                        score += 800
-                if die == 3:
-                    if counts[die] == 1:
-                        score += 0
-                    elif counts[die] == 2:
-                        score += 0
-                    elif counts[die] == 3:
-                        score += 300
-                    elif counts[die] == 4:
-                        score += 600
-                    elif counts[die] == 5:
-                        score += 900
-                    elif counts[die] == 6:
-                        score += 1200
-                if die == 4:
-                    if counts[die] == 1:
-                        score += 0
-                    elif counts[die] == 2:
-                        score += 0
-                    elif counts[die] == 3:
-                        score += 400
-                    elif counts[die] == 4:
-                        score += 800
-                    elif counts[die] == 5:
-                        score += 1200
-                    elif counts[die] == 6:
-                        score += 1600
-                if die == 5:
-                    if counts[die] == 1:
-                        score += 50
-                    elif counts[die] == 2:
-                        score += 100
-                    elif counts[die] == 3:
-                        score += 500
-                    elif counts[die] == 4:
-                        score += 1000
-                    elif counts[die] == 5:
-                        score += 1500
-                    elif counts[die] == 6:
-                        score += 2000
-                if die == 6:
-                    if counts[die] == 1:
-                        score += 0
-                    elif counts[die] == 2:
-                        score += 0
-                    elif counts[die] == 3:
-                        score += 600
-                    elif counts[die] == 4:
-                        score += 1200
-                    elif counts[die] == 5:
-                        score += 1800
-                    elif counts[die] == 6:
-                        score += 2400
-        if pair_counter == 1 and counts[die] == 3:
-            score = 1500
-        if pair_counter == 3:
-            score = 1500
-        if len(counts) == 6:
-            score = 1500
+        # calculate straight
+        if len(dice_count) == 6:
+            return 1500
+
+        # calculate triple doubles
+        if len(dice_count) == 3 and all(value == 2 for value in dice_count.values()):
+            return 1500
+
+        # score based on face value
+        for face_value, count in dice_count.items():
+            if face_value == 5 and count <= 2:
+                score += 50 * count
+            elif face_value == 1 and count <= 2:
+                score += 100 * count
+            elif face_value == 1 and count == 3:
+                score += 1000
+            elif count == 3:
+                score += score_dict[face_value]
+            elif count == 4:
+                score += score_dict[face_value] * 2
+            elif count == 5:
+                score += score_dict[face_value] * 3
+            elif count == 6:
+                score += score_dict[face_value] * 4
+
         return score
-
 
         # find count of each number rolled
 
