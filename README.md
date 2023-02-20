@@ -12,6 +12,8 @@ Aubrey Corsetti
 Oliver Speir
 Harper Foley
 Keyan Tabor
+Matthew Gebhart
+Jason Christopher
 
 ![Psuedo code for Lab 07](psuedo_code_lab_07.png)
 ## Links and Resources
@@ -19,13 +21,18 @@ Keyan Tabor
 [Counter Method](https://realpython.com/python-counter/)
 
 [Lists Comprehension](https://www.pythonforbeginners.com/basics/list-comprehensions-in-python)
-.venv
-install pytest
+
+## Setup 
+
+- pip install pytest-watch
+- Activate Virtual Environment
+- Start the game by running python -m ten_thousand.game in the terminal
+- Run the bot by running python -m bots in the terminal
+
 python 3.11
 (https://github.com/codefellows/seattle-code-python-401d20/tree/main/class-07/lab/tests/version_3)
 
 
-python main.py
 
 ## Tests
 Tests were supplied in class repo, initialized and tested in pytest

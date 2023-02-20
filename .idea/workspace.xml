@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46cb7693-c394-4e76-bb9a-0c91beedde23" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/version_3/__innit__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/version_3/test_validate_keepers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ten-thousand.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ten-thousand.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ten_thousand/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/ten_thousand/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ten_thousand/game_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ten_thousand/game_logic.py" afterDir="false" />
-    </list>
+    <list default="true" id="46cb7693-c394-4e76-bb9a-0c91beedde23" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +53,7 @@
       <workItem from="1672181928150" duration="10470000" />
       <workItem from="1672256596081" duration="13157000" />
       <workItem from="1672356298907" duration="2099000" />
-      <workItem from="1672372969571" duration="697000" />
+      <workItem from="1672372969571" duration="1347000" />
     </task>
     <servers />
   </component>

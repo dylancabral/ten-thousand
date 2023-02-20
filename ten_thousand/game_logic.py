@@ -1,79 +1,92 @@
-from random import randint
 from collections import Counter
+from random import randint
 
 
 class GameLogic:
+    @staticmethod
+    def roll_dice(num=6):
+
+        return tuple([randint(1, 6) for _ in range(num)])
 
     @staticmethod
-    def validate_keepers(dice_roll, dice_kept):
-        dice_roll_validation = Counter(dice_roll)
-        dice_kept_validation = Counter(dice_kept)
+    def calculate_score(dice):
+        """
+        dice is a tuple of integers that represent the user's selected dice pulled out from current roll
+        """
 
-        if len(dice_kept_validation) <= len(dice_roll_validation):
-            if all(dice_kept_validation[key] <= dice_roll_validation[key] for key in dice_kept_validation.keys()):
-                return True
-            return False
-        else:
-            return False
+        if len(dice) > 6:
+            raise Exception("Cheating Cheater!")
 
-    @staticmethod
-    def roll_dice(number):
-        return tuple(randint(1, 6) for x in range(0, number))
+        counts = Counter(dice)
 
-    @staticmethod
-    # Calculates Scores and references them to test value to determine output
-    def calculate_score(dice_roll):
-        dice_count = Counter(dice_roll)
+        if len(counts) == 6:
+            return 1500
 
-        score_dict = {1: 1000, 2: 200, 3: 300, 4: 400, 5: 500, 6: 600}
+        if len(counts) == 3 and all(val == 2 for val in counts.values()):
+            return 1500
 
         score = 0
 
-        # calculate straight
-        if len(dice_count) == 6:
-            return 1500
+        ones_used = fives_used = False
 
-        # calculate triple doubles
-        if len(dice_count) == 3 and all(value == 2 for value in dice_count.values()):
-            return 1500
+        for num in range(1, 6 + 1):
 
-        # score based on face value
-        for face_value, count in dice_count.items():
-            if face_value == 5 and count <= 2:
-                score += 50 * count
-            elif face_value == 1 and count <= 2:
-                score += 100 * count
-            elif face_value == 1 and count == 3:
-                score += 1000
-            elif count == 3:
-                score += score_dict[face_value]
-            elif count == 4:
-                score += score_dict[face_value] * 2
-            elif count == 5:
-                score += score_dict[face_value] * 3
-            elif count == 6:
-                score += score_dict[face_value] * 4
+            pip_count = counts[num]
+
+            if pip_count >= 3:
+
+                if num == 1:
+
+                    ones_used = True
+
+                elif num == 5:
+
+                    fives_used = True
+
+                score += num * 100
+
+                pips_beyond_3 = pip_count - 3
+
+                score += score * pips_beyond_3
+
+
+                if num == 1:
+                    score *= 10
+
+        if not ones_used:
+            score += counts.get(1, 0) * 100
+
+        if not fives_used:
+            score += counts.get(5, 0) * 50
 
         return score
 
-        # find count of each number rolled
+    @staticmethod
+    def validate_keepers(roll, keepers):
 
-        # if count is 3: score is number times 100
-            # else if it's three 1s: 1000 points
-            # else if there are 3 of a kind and a pair: 1500 points
+        keeper_counter = Counter(keepers)
+        roll_counter = Counter(roll)
 
-        # if count is 4: score is number times 100 times 2
-            # else if it's four 1s: 2000 points
+        result = keeper_counter - roll_counter
 
-        # if count is 5: score is number times 100 times 4
-            # else if it's five 1s: 4000 points
+        return not result
 
-        # if count is 6: score is number times 100 times 8
-            # else if it's six 1s: 8000 points
+    @staticmethod
+    def get_scorers(dice):
 
-        # if count < 3: determine if number is a 1 or 5
-            # if 1: each 1 is worth 100 points
-            # if 5: each 5 is worth 50 points
-            # else if there are three pairs: 1500 points
-            # else if there's a straight 1-6: 2000 points
-            # else: 0 points
+        all_dice_score = GameLogic.calculate_score(dice)
+
+        if all_dice_score == 0:
+            return tuple()
+
+        scorers = []
+
+
+        for i, val in enumerate(dice):
+            sub_roll = dice[:i] + dice[i + 1 :]
+            sub_score = GameLogic.calculate_score(sub_roll)
+
+            if sub_score != all_dice_score:
+                scorers.append(val)
+
+        return tuple(scorers)
